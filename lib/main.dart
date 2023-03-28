@@ -131,5 +131,79 @@ class BillList {
       //fill in later
     )
   }
+  
+  
+  /////////////////////////NEW CODE///////////////////
+  
+  /*
+  import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'New US Government Bills',
+      home: BillList(),
+    );
+  }
+}
+
+class BillList extends StatefulWidget {
+  @override
+  _BillListState createState() => _BillListState();
+}
+
+class _BillListState extends State<BillList> {
+  List<dynamic> _bills = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBills();
+  }
+
+  Future<void> _fetchBills() async {
+    final response = await http.get(Uri.parse(
+        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _bills = jsonDecode(response.body) as List<dynamic>;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New US Government Bills'),
+      ),
+      body: ListView.builder(
+        itemCount: _bills.length,
+        itemBuilder: (context, index) {
+          final bill = _bills[index];
+          return ListTile(
+            title: Text(bill['title']),
+            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () {
+              // Navigate to bill details screen
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+  */
 
 }
+
+
+
