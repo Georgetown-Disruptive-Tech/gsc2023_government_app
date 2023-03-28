@@ -131,5 +131,32 @@ class BillList {
       //fill in later
     )
   }
+  
+class ListofBills extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Dummy List'),
+        ),
+        body: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('Bill 1'),
+            ),
+            ListTile(
+              title: Text('Bill 2'),
+            ),
+            ListTile(
+              title: Text('Bill 3'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 }
