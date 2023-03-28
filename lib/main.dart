@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -112,4 +113,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class BillList {
+  final String title;
+  final String action;
+  final int id;
+
+  const BillList({
+    required this.id,
+    required this.title,
+    required this.action,
+  });
+
+  factory BillList.fromJson(Map<String, dynamic> json){
+    return BillList(
+      //fill in later
+    )
+  }
+
 }
