@@ -153,6 +153,7 @@ class MyApp extends NoStateWidget {
   }
 }
 
+
 class BillList extends StateWidget {
   @override
   _BillListState createState() => _BillListState();
@@ -201,6 +202,203 @@ class _BillListState extends State<BillList> {
     );
   }
 }
+
+////new new code
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'New US Government Bills',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => BillList(),
+        '/bill_details': (context) => BillDetails(),
+      },
+    );
+  }
+}
+
+class BillList extends StatefulWidget {
+  @override
+  _BillListState createState() => _BillListState();
+}
+
+class _BillListState extends State<BillList> {
+  List<dynamic> _bills = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBills();
+  }
+
+  Future<void> _fetchBills() async {
+    final response = await http.get(Uri.parse(
+        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _bills = jsonDecode(response.body) as List<dynamic>;
+      });
+    }
+  }
+
+  void _navigateToBillDetails(BuildContext context, dynamic bill) {
+    Navigator.pushNamed(context, '/bill_details', arguments: bill);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New US Government Bills'),
+      ),
+      body: ListView.builder(
+        itemCount: _bills.length,
+        itemBuilder: (context, index) {
+          final bill = _bills[index];
+          return ListTile(
+            title: Text(bill['title']),
+            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () => _navigateToBillDetails(context, bill),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class BillDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final dynamic bill = ModalRoute.of(context)!.settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(bill['title']),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Sponsor: ${bill['sponsor']['name']}'),
+            SizedBox(height: 16.0),
+            Text(bill['description']),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+//NEW NEW CODE WITH NOTHING MISSING 
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'New US Government Bills',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => BillList(),
+        '/bill_details': (context) => BillDetails(),
+      },
+    );
+  }
+}
+
+class BillList extends StatefulWidget {
+  @override
+  _BillListState createState() => _BillListState();
+}
+
+class _BillListState extends State<BillList> {
+  List<dynamic> _bills = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBills();
+  }
+
+  Future<void> _fetchBills() async {
+    final response = await http.get(Uri.parse(
+        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _bills = jsonDecode(response.body) as List<dynamic>;
+      });
+    }
+  }
+
+  void _navigateToBillDetails(BuildContext context, dynamic bill) {
+    Navigator.pushNamed(context, '/bill_details', arguments: bill);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New US Government Bills'),
+      ),
+      body: ListView.builder(
+        itemCount: _bills.length,
+        itemBuilder: (context, index) {
+          final bill = _bills[index];
+          return ListTile(
+            title: Text(bill['title']),
+            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () => _navigateToBillDetails(context, bill),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class BillDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final dynamic bill = ModalRoute.of(context)!.settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(bill['title']),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Sponsor: ${bill['sponsor']['name']}'),
+            SizedBox(height: 16.0),
+            Text(bill['description']),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
   */
 
 }
