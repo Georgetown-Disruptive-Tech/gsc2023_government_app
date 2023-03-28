@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,6 +53,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  late Future<BillList> futureBills;
+
+  @override
+  void initState() {
+    super.initState();
+    futureBills = fetchBillList();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -115,6 +125,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+Future<BillList> fetchBillList() async {
+  final response = await http.get(Uri.parse(
+      'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
+  if (response.statusCode == 200) {
+    return BillList.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load Bills');
+  }
+}
+
 class BillList {
   final String title;
   final String action;
@@ -126,10 +146,12 @@ class BillList {
     required this.action,
   });
 
-  factory BillList.fromJson(Map<String, dynamic> json){
+  factory BillList.fromJson(Map<String, dynamic> json) {
     return BillList(
       //fill in later
-    )
+      id: json['number'],
+      title: json['title'],
+      action: json['latestAction']['text'],
+    );
   }
-
 }
