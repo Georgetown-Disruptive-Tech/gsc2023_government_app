@@ -143,17 +143,17 @@ import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends NoStateWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'New US Government Bills',
+      title: 'US Government Bills',
       home: BillList(),
     );
   }
 }
 
-class BillList extends StatefulWidget {
+class BillList extends StateWidget {
   @override
   _BillListState createState() => _BillListState();
 }
@@ -164,10 +164,10 @@ class _BillListState extends State<BillList> {
   @override
   void initState() {
     super.initState();
-    _fetchBills();
+    _getBills();
   }
 
-  Future<void> _fetchBills() async {
+  Future<void> _getBills() async {
     final response = await http.get(Uri.parse(
         'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
 
@@ -182,7 +182,7 @@ class _BillListState extends State<BillList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New US Government Bills'),
+        title: Text('US Government Bills'),
       ),
       body: ListView.builder(
         itemCount: _bills.length,
