@@ -132,10 +132,10 @@ class BillList {
     )
   }
   */
-  
-  /////////////////////////NEW CODE///////////////////
-  
-  /*
+
+/////////////////////////NEW CODE///////////////////
+
+/*
   import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -302,16 +302,18 @@ class BillDetails extends StatelessWidget {
 
 */
 
-
-//NEW NEW CODE WITH NOTHING MISSING 
+//NEW NEW CODE WITH NOTHING MISSING
+//flutter run --no-sound-null-safety
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer' as developer;
 
-void main() => runApp( MyApp());
+void main() => runApp(MyApp());
 
- class MyApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
@@ -322,6 +324,7 @@ class _MyAppState extends State<MyApp> {
   late Future<BillList> futureBillList;
   @override
   void initState() {
+    developer.log("test");
     super.initState();
     futureBillList = fetchBillList();
   }
@@ -343,11 +346,10 @@ class _MyAppState extends State<MyApp> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 //return (
-                  Text(snapshot.data!.title);
-                  Text(snapshot.data!.id);
-                  return Text(snapshot.data!.action);
+                Text(snapshot.data!.title);
+                Text(snapshot.data!.id);
+                return Text(snapshot.data!.action);
                 //);
-
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
@@ -373,9 +375,8 @@ class BillList {
     required this.action,
   });
 
-  factory BillList.fromJson(Map<String, dynamic> json){
+  factory BillList.fromJson(Map<String, dynamic> json) {
     return BillList(
-
       id: json['userId'],
       action: json['action'],
       title: json['title'],
@@ -385,24 +386,20 @@ class BillList {
 }
 
 Future<BillList> fetchBillList() async {
+  const String key = 'CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn';
   final response = await http.get(Uri.parse(
-      'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+      'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
   /*const tmdbApiKey = String.fromEnvironment('TMDB_KEY');
   if (tmdbApiKey.isEmpty) {
   throw AssertionError('TMDB_KEY is not set');
   }*/
 
   if (response.statusCode == 200) {
-
+    developer.log(response.body);
     return BillList.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load Data');
   }
 }
 
-
-
 //}
-
-
-
