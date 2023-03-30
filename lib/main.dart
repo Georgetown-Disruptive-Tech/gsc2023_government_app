@@ -387,6 +387,10 @@ class BillList {
 Future<BillList> fetchBillList() async {
   final response = await http.get(Uri.parse(
       'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+  /*const tmdbApiKey = String.fromEnvironment('TMDB_KEY');
+  if (tmdbApiKey.isEmpty) {
+  throw AssertionError('TMDB_KEY is not set');
+  }*/
 
   if (response.statusCode == 200) {
 
