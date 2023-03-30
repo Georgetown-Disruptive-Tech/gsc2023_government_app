@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -131,7 +131,7 @@ class BillList {
       //fill in later
     )
   }
-  
+  */
   
   /////////////////////////NEW CODE///////////////////
   
@@ -300,6 +300,7 @@ class BillDetails extends StatelessWidget {
   }
 }
 
+*/
 
 
 //NEW NEW CODE WITH NOTHING MISSING 
@@ -308,100 +309,96 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() => runApp( MyApp());
 
-class MyApp extends StatelessWidget {
+ class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'New US Government Bills',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => BillList(),
-        '/bill_details': (context) => BillDetails(),
-      },
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class BillList extends StatefulWidget {
-  @override
-  _BillListState createState() => _BillListState();
-}
-
-class _BillListState extends State<BillList> {
-  List<dynamic> _bills = [];
-
+class _MyAppState extends State<MyApp> {
+  late Future<BillList> futureBillList;
   @override
   void initState() {
     super.initState();
-    _fetchBills();
-  }
-
-  Future<void> _fetchBills() async {
-    final response = await http.get(Uri.parse(
-        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        _bills = jsonDecode(response.body) as List<dynamic>;
-      });
-    }
-  }
-
-  void _navigateToBillDetails(BuildContext context, dynamic bill) {
-    Navigator.pushNamed(context, '/bill_details', arguments: bill);
+    futureBillList = fetchBillList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('New US Government Bills'),
+    return MaterialApp(
+      title: 'Government Live Bill Updating',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: ListView.builder(
-        itemCount: _bills.length,
-        itemBuilder: (context, index) {
-          final bill = _bills[index];
-          return ListTile(
-            title: Text(bill['title']),
-            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
-            trailing: Icon(Icons.arrow_forward),
-            onTap: () => _navigateToBillDetails(context, bill),
-          );
-        },
-      ),
-    );
-  }
-}
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Live Bill Updating'),
+        ),
+        body: Center(
+          child: FutureBuilder<BillList>(
+            future: futureBillList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                //return (
+                  Text(snapshot.data!.title);
+                  Text(snapshot.data!.id);
+                  return Text(snapshot.data!.action);
+                //);
 
-class BillDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final dynamic bill = ModalRoute.of(context)!.settings.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(bill['title']),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Sponsor: ${bill['sponsor']['name']}'),
-            SizedBox(height: 16.0),
-            Text(bill['description']),
-          ],
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );
   }
 }
 
+class BillList {
+  final String title;
+  final String action;
+  final String id;
 
-  */
+  const BillList({
+    required this.id,
+    required this.title,
+    required this.action,
+  });
 
+  factory BillList.fromJson(Map<String, dynamic> json){
+    return BillList(
+
+      id: json['userId'],
+      action: json['action'],
+      title: json['title'],
+      //fill in later
+    );
+  }
 }
+
+Future<BillList> fetchBillList() async {
+  final response = await http.get(Uri.parse(
+      'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
+
+  if (response.statusCode == 200) {
+
+    return BillList.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load Data');
+  }
+}
+
+
+
+//}
 
 
 
