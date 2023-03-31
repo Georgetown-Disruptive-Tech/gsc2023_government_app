@@ -16,13 +16,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  late Future<BillList> futureBills;
-
-  @override
-  void initState() {
-    super.initState();
-    futureBills = fetchBillList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +39,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<BillList> futureBillList;
+  late Future<Bill> futureBill1;
+  late Future<Bill> futureBill2;
+  late Future<Bill> futureBill3;
 
   @override
   void initState() {
     super.initState();
-    futureBillList = fetchBillList();
+    futureBill1 = fetchBill(0);
+    futureBill2 = fetchBill(1);
+    futureBill3 = fetchBill(2);
   }
 
   @override
@@ -61,58 +58,100 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Live Bill Updating"),
       ),
       body: Center(
-        child: FutureBuilder<BillList>(
-          future: futureBillList,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Container(
-                child: Column(children: [
-                  Text(snapshot.data!.title),
-                  Text(snapshot.data!.action),
-                  Text(snapshot.data!.id)
-                ]),
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+        child: Container(
+          child: Column(children: [
+            FutureBuilder<Bill>(
+              future: futureBill1,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: Column(children: [
+                      Text(snapshot.data!.title),
+                      Text(snapshot.data!.action),
+                      Text(snapshot.data!.id)
+                    ]),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+            FutureBuilder<Bill>(
+              future: futureBill2,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: Column(children: [
+                      Text(snapshot.data!.title),
+                      Text(snapshot.data!.action),
+                      Text(snapshot.data!.id)
+                    ]),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+            FutureBuilder<Bill>(
+              future: futureBill3,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: Column(children: [
+                      Text(snapshot.data!.title),
+                      Text(snapshot.data!.action),
+                      Text(snapshot.data!.id)
+                    ]),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+          ]),
         ),
       ),
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
 
-class BillList {
+class Bill {
   final String title;
   final String action;
   final String id;
 
-  const BillList({
+  const Bill({
     required this.id,
     required this.title,
     required this.action,
   });
 
-  factory BillList.fromJson(Map<String, dynamic> json) {
-    return BillList(
-      title: json["bills"][0]["title"],
-      action: json["bills"][0]["latestAction"]["text"],
-      id: json["bills"][0]["number"],
+  factory Bill.fromJson(Map<String, dynamic> json, int num) {
+    return Bill(
+      title: json["bills"][num]["title"],
+      action: json["bills"][num]["latestAction"]["text"],
+      id: json["bills"][num]["number"],
     );
   }
 }
 
-Future<BillList> fetchBillList() async {
+Future<Bill> fetchBill(int num) async {
   final response = await http.get(Uri.parse(
       'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
 
   print("HELP ME");
 
   if (response.statusCode == 200) {
-    return BillList.fromJson(jsonDecode(response.body));
+    return Bill.fromJson(jsonDecode(response.body), num);
   } else {
     throw Exception("Failed to Load Bills");
   }
