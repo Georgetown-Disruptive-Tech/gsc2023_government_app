@@ -173,8 +173,6 @@ Future<Bill> fetchBill(int num) async {
   final response = await http.get(Uri.parse(
       'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
 
-  print("HELP ME");
-
   if (response.statusCode == 200) {
     return Bill.fromJson(jsonDecode(response.body), num);
   } else {
