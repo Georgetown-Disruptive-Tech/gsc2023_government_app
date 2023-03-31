@@ -56,7 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Live Bill Updating"),
+        centerTitle: true,
+        title: Text(
+          "Hill Hawk",
+          textAlign: TextAlign.center,
+        ),
       ),
       body: Center(
         child: Container(
@@ -67,17 +71,33 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
+                      Text(""),
+                      Text(""),
+                      Text(
+                        "Bill Number: " + snapshot.data!.id,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 17),
+                      ),
                       Text(
                         snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
+                      Text(
+                        snapshot.data!.action,
+                        textAlign: TextAlign.center,
+                      ),
                       InkWell(
-                          child: new Text("Read More Here"),
+                          child: new Text("Read More Here",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline)),
                           onTap: () => launch(
                               'https://www.google.com/search?q=${snapshot.data!.title}')),
+                      Text(""),
+                      Text(""),
+                      Text(""),
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -95,16 +115,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   return Container(
                     child: Column(children: [
                       Text(
+                        "Bill Number: " + snapshot.data!.id,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      Text(
                         snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
+                      Text(
+                        snapshot.data!.action,
+                        textAlign: TextAlign.center,
+                      ),
                       InkWell(
-                          child: new Text("Read More Here"),
+                          child: new Text("Read More Here",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline)),
                           onTap: () => launch(
                               'https://www.google.com/search?q=${snapshot.data!.title}')),
+                      Text(""),
+                      Text(""),
+                      Text(""),
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -120,19 +154,32 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
-                    child: Column(children: [
-                      Text(
-                        snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
-                      InkWell(
-                          child: new Text("Read More Here"),
-                          onTap: () => launch(
-                              'https://www.google.com/search?q=${snapshot.data!.title}')),
-                    ]),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Bill Number: " + snapshot.data!.id,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          Text(
+                            snapshot.data!.title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            snapshot.data!.action,
+                            textAlign: TextAlign.center,
+                          ),
+                          InkWell(
+                              child: new Text("Read More Here",
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline)),
+                              onTap: () => launch(
+                                  'https://www.google.com/search?q=${snapshot.data!.title}')),
+                        ]),
                   );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
