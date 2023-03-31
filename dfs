@@ -1,0 +1,103 @@
+[33mcommit 9a213f10260d41761473b4e2f4a9d1e65f298904[m[33m ([m[1;36mHEAD -> [m[1;32mbaxter[m[33m)[m
+Merge: d8f2e0b b4b9236
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 22:39:31 2023 -0400
+
+    Merge branch 'baxter' of https://github.com/Georgetown-Disruptive-Tech/gsc2023_government_app into baxter
+
+[33mcommit d8f2e0b95e60b221fa7df9b8bd457d846b1e8ff0[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 22:39:27 2023 -0400
+
+    for merge
+
+[33mcommit b4b92369ab199bc9ae208122b201e07dd94b961c[m[33m ([m[1;31morigin/baxter[m[33m)[m
+Author: Baxter <baj55@georgetown.edu>
+Date:   Thu Mar 30 22:38:37 2023 -0400
+
+    prettiness
+
+[33mcommit 8a8f445fb08e0589cb9eb5d8e59da6ccc38185db[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 22:31:02 2023 -0400
+
+    finished backend stuff
+
+[33mcommit 517e3ca12167cefa16bf63c774207e1db51d5d0a[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 22:14:42 2023 -0400
+
+    working on 3 diff bills
+
+[33mcommit bb4dec6d32cdbeaf61d7e5af9a172e164d0ad9a2[m
+Merge: 95bcdfc c883f6c
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 22:02:55 2023 -0400
+
+    api call for one element works
+
+[33mcommit 95bcdfc6a03e6220c1acba21c1c4540bfca95344[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 21:57:58 2023 -0400
+
+    this bad
+
+[33mcommit c883f6c9009578f96db26b57ea0fd50f03600810[m
+Author: Baxter <baj55@georgetown.edu>
+Date:   Thu Mar 30 21:57:06 2023 -0400
+
+    got bill title
+
+[33mcommit d1013980efb619da95d7810034877f419b6bd6e4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 21:33:03 2023 -0400
+
+    fixed formatException
+
+[33mcommit bc06549958650434040fdcfab305c46e4bb4e124[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Thu Mar 30 18:57:28 2023 -0400
+
+    working on API call
+
+[33mcommit 622534b8654a79623de7b4b924641cf1fe0920fe[m
+Author: Baxter <baj55@georgetown.edu>
+Date:   Thu Mar 30 15:52:58 2023 -0400
+
+    lost socket exception
+
+[33mcommit e9631a4630134f3313b7912b4034c75f9a6fbe10[m
+Author: Baxter <baj55@georgetown.edu>
+Date:   Wed Mar 29 23:15:24 2023 -0400
+
+    used flutter API intro and got socket
+
+[33mcommit c02233f8b7e5fb2c0fa0bf75207741339f24c140[m
+Author: blancafaine <123107804+blancafaine@users.noreply.github.com>
+Date:   Mon Mar 27 22:05:14 2023 -0400
+
+    Update main.dart
+
+[33mcommit 43d9e833468e2619134062eb947230b7b9ca74a7[m
+Author: blancafaine <123107804+blancafaine@users.noreply.github.com>
+Date:   Mon Mar 27 21:58:15 2023 -0400
+
+    Update main.dart
+
+[33mcommit bae52d47289e5d169f9c5868fbecd0419d6ef227[m
+Author: blancafaine <123107804+blancafaine@users.noreply.github.com>
+Date:   Mon Mar 27 21:52:44 2023 -0400
+
+    Update main.dart
+
+[33mcommit 7452bc80e0d157e291fec9953aa519e0028bad5b[m
+Author: JasYi <44511533+JasYi@users.noreply.github.com>
+Date:   Mon Mar 27 21:29:50 2023 -0400
+
+    creating API classes
+
+[33mcommit 214a66b564c6a9e5a0636cb392e33edfde937800[m
+Author: Reed Uhlik <reeduhlik@gmail.com>
+Date:   Mon Mar 13 20:18:30 2023 -0400
+
+    Initial Flutter setup
