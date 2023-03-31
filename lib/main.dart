@@ -1,14 +1,29 @@
-/*import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  late Future<BillList> futureBills;
+
+  @override
+  void initState() {
+    super.initState();
+    futureBills = fetchBill();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -126,280 +141,22 @@ class BillList {
     required this.action,
   });
 
-  factory BillList.fromJson(Map<String, dynamic> json){
-    return BillList(
-      //fill in later
-    )
-  }
-  */
-
-/////////////////////////NEW CODE///////////////////
-
-/*
-  import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-void main() => runApp(MyApp());
-
-class MyApp extends NoStateWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'US Government Bills',
-      home: BillList(),
-    );
-  }
-}
-
-
-class BillList extends StateWidget {
-  @override
-  _BillListState createState() => _BillListState();
-}
-
-class _BillListState extends State<BillList> {
-  List<dynamic> _bills = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _getBills();
-  }
-
-  Future<void> _getBills() async {
-    final response = await http.get(Uri.parse(
-        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        _bills = jsonDecode(response.body) as List<dynamic>;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('US Government Bills'),
-      ),
-      body: ListView.builder(
-        itemCount: _bills.length,
-        itemBuilder: (context, index) {
-          final bill = _bills[index];
-          return ListTile(
-            title: Text(bill['title']),
-            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
-            trailing: Icon(Icons.arrow_forward),
-            onTap: () {
-              // Navigate to bill details screen
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-////new new code
-
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'New US Government Bills',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => BillList(),
-        '/bill_details': (context) => BillDetails(),
-      },
-    );
-  }
-}
-
-class BillList extends StatefulWidget {
-  @override
-  _BillListState createState() => _BillListState();
-}
-
-class _BillListState extends State<BillList> {
-  List<dynamic> _bills = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchBills();
-  }
-
-  Future<void> _fetchBills() async {
-    final response = await http.get(Uri.parse(
-        'https://openstates.org/api/v1/bills/?state=us&search_window=session&order=updated_at&page=1&per_page=10'));
-
-    if (response.statusCode == 200) {
-      setState(() {
-        _bills = jsonDecode(response.body) as List<dynamic>;
-      });
-    }
-  }
-
-  void _navigateToBillDetails(BuildContext context, dynamic bill) {
-    Navigator.pushNamed(context, '/bill_details', arguments: bill);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('New US Government Bills'),
-      ),
-      body: ListView.builder(
-        itemCount: _bills.length,
-        itemBuilder: (context, index) {
-          final bill = _bills[index];
-          return ListTile(
-            title: Text(bill['title']),
-            subtitle: Text('Sponsor: ${bill['sponsor']['name']}'),
-            trailing: Icon(Icons.arrow_forward),
-            onTap: () => _navigateToBillDetails(context, bill),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class BillDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final dynamic bill = ModalRoute.of(context)!.settings.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(bill['title']),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Sponsor: ${bill['sponsor']['name']}'),
-            SizedBox(height: 16.0),
-            Text(bill['description']),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-*/
-
-//NEW NEW CODE WITH NOTHING MISSING
-//flutter run --no-sound-null-safety
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:developer' as developer;
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late Future<BillList> futureBillList;
-  @override
-  void initState() {
-    developer.log("test");
-    super.initState();
-    futureBillList = fetchBillList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Government Live Bill Updating',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Live Bill Updating'),
-        ),
-        body: Center(
-          child: FutureBuilder<BillList>(
-            future: futureBillList,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                //return (
-                Text(snapshot.data!.title);
-                Text(snapshot.data!.id);
-                return Text(snapshot.data!.action);
-                //);
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BillList {
-  final String title;
-  final String action;
-  final String id;
-
-  const BillList({
-    required this.id,
-    required this.title,
-    required this.action,
-  });
-
   factory BillList.fromJson(Map<String, dynamic> json) {
     return BillList(
-      id: json['userId'],
-      action: json['action'],
-      title: json['title'],
-      //fill in later
+      title: json["bills"][0]["title"],
+      action: json["bills"][0]["latestAction"]["text"],
+      id: json["bills"][0]["number"],
     );
   }
 }
 
-Future<BillList> fetchBillList() async {
-  const String key = 'CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn';
+Future<BillList> fetchBill() async {
   final response = await http.get(Uri.parse(
       'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
-  /*const tmdbApiKey = String.fromEnvironment('TMDB_KEY');
-  if (tmdbApiKey.isEmpty) {
-  throw AssertionError('TMDB_KEY is not set');
-  }*/
 
   if (response.statusCode == 200) {
-    developer.log(response.body);
     return BillList.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load Data');
+    throw Exception("Failed to Load Bills");
   }
 }
-
-//}
