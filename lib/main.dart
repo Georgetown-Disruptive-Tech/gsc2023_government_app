@@ -22,25 +22,47 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     futureBills = fetchBill();
+    print(futureBills);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return Container(
+      /*child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      ),*/
+      color: Colors.white,
+      child: FutureBuilder<BillList>(
+          future: futureBills,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(
+                "data",
+                textDirection: TextDirection.ltr,
+                style: TextStyle(color: Colors.red),
+              );
+            } else if (snapshot.hasError) {
+              return Text(
+                "error",
+                textDirection: TextDirection.ltr,
+                style: TextStyle(color: Colors.red),
+              );
+            }
+            return const CircularProgressIndicator();
+          }),
     );
   }
 }
@@ -153,6 +175,8 @@ class BillList {
 Future<BillList> fetchBill() async {
   final response = await http.get(Uri.parse(
       'https://api.congress.gov/v3/bill?api_key=CqI23WOUucHVKgqkyFmTcio5UiReagjYGSuQR1pn'));
+
+  print("HELP ME");
 
   if (response.statusCode == 200) {
     return BillList.fromJson(jsonDecode(response.body));
