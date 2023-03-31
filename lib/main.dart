@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,26 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Live Bill Updating"),
       ),
+      
       body: Center(
         child: Container(
-          child: Column(children: [
+          margin: const EdgeInsets.all(10.0),
+          color: Color.fromARGB(255, 36, 106, 149),
+          width: 1130.0,
+          height: 400.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
             FutureBuilder<Bill>(
+              
               future: futureBill1,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(
-                        snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
-                      InkWell(
-                          child: new Text("Read More Here"),
-                          onTap: () => launch(
-                              'https://www.google.com/search?q=${snapshot.data!.title}')),
+                      Text(snapshot.data!.title,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.action,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.id,
+                      style: Theme.of(context).textTheme.titleLarge,),
+                      Text(""),
+                      Text(""),
+
+
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -94,17 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(
-                        snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
-                      InkWell(
-                          child: new Text("Read More Here"),
-                          onTap: () => launch(
-                              'https://www.google.com/search?q=${snapshot.data!.title}')),
+                      Text(snapshot.data!.title,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.action,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.id,
+                      style: Theme.of(context).textTheme.titleLarge,),
+                      Text(""),
+                      Text(""),
+
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -121,17 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(
-                        snapshot.data!.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text("Bill Number: " + snapshot.data!.id),
-                      Text(snapshot.data!.action),
-                      InkWell(
-                          child: new Text("Read More Here"),
-                          onTap: () => launch(
-                              'https://www.google.com/search?q=${snapshot.data!.title}')),
+                      Text(snapshot.data!.title,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.action,
+                      style: Theme.of(context).textTheme.titleLarge,),
+
+                      Text(snapshot.data!.id,
+                      style: Theme.of(context).textTheme.titleLarge,)
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -181,3 +186,4 @@ Future<Bill> fetchBill(int num) async {
     throw Exception("Failed to Load Bills");
   }
 }
+
