@@ -64,14 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Container(
-          child: Column(children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             FutureBuilder<Bill>(
               future: futureBill1,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(""),
                       Text(""),
                       Text(
                         "Bill Number: " + snapshot.data!.id,
