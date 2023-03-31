@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -66,9 +67,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(snapshot.data!.title),
+                      Text(
+                        snapshot.data!.title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text("Bill Number: " + snapshot.data!.id),
                       Text(snapshot.data!.action),
-                      Text(snapshot.data!.id)
+                      InkWell(
+                          child: new Text("Read More Here"),
+                          onTap: () => launch(
+                              'https://www.google.com/search?q=${snapshot.data!.title}')),
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -85,9 +94,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(snapshot.data!.title),
+                      Text(
+                        snapshot.data!.title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text("Bill Number: " + snapshot.data!.id),
                       Text(snapshot.data!.action),
-                      Text(snapshot.data!.id)
+                      InkWell(
+                          child: new Text("Read More Here"),
+                          onTap: () => launch(
+                              'https://www.google.com/search?q=${snapshot.data!.title}')),
                     ]),
                   );
                 } else if (snapshot.hasError) {
@@ -104,9 +121,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   return Container(
                     child: Column(children: [
-                      Text(snapshot.data!.title),
+                      Text(
+                        snapshot.data!.title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text("Bill Number: " + snapshot.data!.id),
                       Text(snapshot.data!.action),
-                      Text(snapshot.data!.id)
+                      InkWell(
+                          child: new Text("Read More Here"),
+                          onTap: () => launch(
+                              'https://www.google.com/search?q=${snapshot.data!.title}')),
                     ]),
                   );
                 } else if (snapshot.hasError) {
